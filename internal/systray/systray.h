@@ -1,3 +1,9 @@
+/*
+        this file contains code from the systray project
+   (https://github.com/getlantern/systray), licensed under the apache license.
+        see more in the copying.md file in the root directory of this project.
+*/
+
 #include "stdbool.h"
 
 extern void systray_ready();

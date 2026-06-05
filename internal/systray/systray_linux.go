@@ -3,6 +3,11 @@
 
 package systray
 
+/*
+	This file contains code from the systray project (https://github.com/getlantern/systray), licensed under the Apache License.
+	See more in the COPYING.md file in the root directory of this project.
+*/
+
 // #include "systray.h"
 import "C"
 
@@ -25,8 +30,10 @@ func quit() {
 // AddMenuItemCheckbox adds a menu item with the designated title and tooltip and a checkbox for Linux.
 // It can be safely invoked from different goroutines.
 // On Windows and OSX this is the same as calling AddMenuItem
-func AddMenuItemCheckbox(title string, tooltip string, checked bool) *menuItem {
-	item := newMenuItem(title, tooltip, nil)
+//
+// NOTE: tooltip is not set on Linux
+func AddMenuItemCheckbox(title string, checked bool) *menuItem {
+	item := newMenuItem(title, "", nil)
 	item.isCheckable = true
 	item.checked = checked
 	item.update()

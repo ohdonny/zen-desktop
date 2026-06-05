@@ -1,5 +1,10 @@
 package systray
 
+/*
+	This file contains code from the systray project (https://github.com/getlantern/systray), licensed under the Apache License.
+	See more in the COPYING.md file in the root directory of this project.
+*/
+
 import (
 	"log"
 	"sync/atomic"
@@ -126,4 +131,3 @@ func (item *menuItem) Uncheck() {
 	item.checked = false
 	item.update()
 }
-

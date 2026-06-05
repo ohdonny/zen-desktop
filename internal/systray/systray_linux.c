@@ -1,3 +1,10 @@
+
+/*
+        this file contains code from the systray project
+   (https://github.com/getlantern/systray), licensed under the apache license.
+        see more in the copying.md file in the root directory of this project.
+*/
+
 #include <errno.h>
 #include <limits.h>
 #include <stdlib.h>
