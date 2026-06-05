@@ -2,17 +2,4 @@
 //
 // For more documentation on how to configure debug tasks,
 // see: https://zed.dev/docs/debugger
-[
-  {
-    "label": "Wails: Debug zen",
-    "adapter": "Delve",
-    "request": "launch",
-    "mode": "exec",
-    "program": "$ZED_WORKTREE_ROOT/build/bin/Zen",
-    "cwd": "$ZED_WORKTREE_ROOT",
-    "build": {
-      "command": "wails",
-      "args": ["build", "-debug", "-devtools"],
-    },
-  },
-]
+[]
