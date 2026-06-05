@@ -75,7 +75,8 @@ func (m *Manager) OnProxyStarted() {
 	}
 
 	m.startStopMenuItem.SetTitle("Stop")
-	m.startStopMenuItem.SetTooltip("Stop")
+	m.startStopMenuItem.SetTooltip("")
+	m.startStopMenuItem.checked = true
 }
 
 // OnProxyStopped should be called when the proxy gets stopped.
@@ -91,7 +92,8 @@ func (m *Manager) OnProxyStopped() {
 	}
 
 	m.startStopMenuItem.SetTitle("Start")
-	m.startStopMenuItem.SetTooltip("Start")
+	m.startStopMenuItem.SetTooltip("")
+	m.startStopMenuItem.checked = false
 }
 
 func (m *Manager) onReady(ctx context.Context) func() {

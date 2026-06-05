@@ -55,6 +55,8 @@ func (item *menuItem) SetTitle(title string) {
 
 // SetTooltip sets the systray tooltip to display on mouse hover of the tray icon,
 // only available on Mac and Windows.
+//
+// NOTE: tooltip is not set on Linux
 func (item *menuItem) SetTooltip(tooltip string) {
 	C.setTooltip(C.CString(tooltip))
 }
