@@ -7,8 +7,11 @@ package systray
 
 import (
 	"log"
+	"sync"
 	"sync/atomic"
 )
+
+var quitOnce sync.Once
 
 // setTooltip sets the systray tooltip to display on mouse hover of the tray icon.
 func setTooltip(tooltip string) {

@@ -100,7 +100,7 @@ func (m *Manager) onReady(ctx context.Context) func() {
 	return func() {
 		setIcon(m.logoBytes)
 
-		openMenuItem := AddMenuItemCheckbox("Open", false)
+		openMenuItem := addMenuItemCheckbox("Open", false)
 		go func() {
 			for range openMenuItem.ClickedCh {
 				runtime.Show(ctx)
@@ -111,7 +111,7 @@ func (m *Manager) onReady(ctx context.Context) func() {
 		active := m.proxyActive
 		m.proxyStateMu.Unlock()
 
-		m.startStopMenuItem = AddMenuItemCheckbox("Start", active)
+		m.startStopMenuItem = addMenuItemCheckbox("Start", active)
 		go func() {
 			for range m.startStopMenuItem.ClickedCh {
 				if active {
@@ -125,7 +125,7 @@ func (m *Manager) onReady(ctx context.Context) func() {
 		id := atomic.AddUint32(&currentID, 1)
 		addSeparator(id)
 
-		quitMenuItem := AddMenuItemCheckbox("Quit", false)
+		quitMenuItem := addMenuItemCheckbox("Quit", false)
 		go func() {
 			for range quitMenuItem.ClickedCh {
 				runtime.Quit(ctx)

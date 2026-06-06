@@ -20,7 +20,6 @@ var (
 	menuItemsLock sync.RWMutex
 
 	currentID = uint32(0)
-	quitOnce  sync.Once
 )
 
 // menuItem is used to keep track each menu item of systray.

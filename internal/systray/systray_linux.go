@@ -32,7 +32,7 @@ func quit() {
 // On Windows and OSX this is the same as calling AddMenuItem
 //
 // NOTE: tooltip is not set on Linux.
-func AddMenuItemCheckbox(title string, checked bool) *menuItem {
+func addMenuItemCheckbox(title string, checked bool) *menuItem {
 	item := newMenuItem(title, "", nil)
 	item.isCheckable = true
 	item.checked = checked
