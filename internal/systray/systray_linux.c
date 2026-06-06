@@ -99,7 +99,9 @@ gboolean do_set_icon(gpointer data) {
   return FALSE;
 }
 
-void _systray_menu_item_selected(int *id) { systray_menu_item_selected(*id); }
+void _systray_menu_item_selected(gpointer data) {
+  systray_menu_item_selected(GPOINTER_TO_INT(data));
+}
 
 GtkMenuItem *find_menu_by_id(int id) {
   GList *it;
@@ -147,11 +149,9 @@ gboolean do_add_or_update_menu_item(gpointer data) {
     } else {
       menu_item = gtk_menu_item_new_with_label(mii->title);
     }
-    int *id = malloc(sizeof(int));
-    *id = mii->menu_id;
-    long signalHandlerId =
-        g_signal_connect_swapped(G_OBJECT(menu_item), "activate",
-                                 G_CALLBACK(_systray_menu_item_selected), id);
+    long signalHandlerId = g_signal_connect_swapped(
+        G_OBJECT(menu_item), "activate",
+        G_CALLBACK(_systray_menu_item_selected), GINT_TO_POINTER(mii->menu_id));
 
     if (mii->parent_menu_id == 0) {
       gtk_menu_shell_append(GTK_MENU_SHELL(global_tray_menu), menu_item);
@@ -171,14 +171,8 @@ gboolean do_add_or_update_menu_item(gpointer data) {
     new_item->menu_id = mii->menu_id;
     new_item->signalHandlerId = signalHandlerId;
     new_item->menu_item = menu_item;
-    GList *new_node = malloc(sizeof(GList));
-    new_node->data = new_item;
-    new_node->next = global_menu_items;
-    if (global_menu_items != NULL) {
-      global_menu_items->prev = new_node;
-    }
-    global_menu_items = new_node;
-    it = new_node;
+    global_menu_items = g_list_prepend(global_menu_items, new_item);
+    it = global_menu_items;
   }
   GtkWidget *menu_item = GTK_WIDGET(((MenuItemNode *)(it->data))->menu_item);
   gtk_widget_set_sensitive(menu_item, mii->disabled != 1);
@@ -191,9 +185,11 @@ gboolean do_add_or_update_menu_item(gpointer data) {
 }
 
 gboolean do_add_separator(gpointer data) {
+  MenuItemInfo *mii = (MenuItemInfo *)data;
   GtkWidget *separator = gtk_separator_menu_item_new();
   gtk_menu_shell_append(GTK_MENU_SHELL(global_tray_menu), separator);
   gtk_widget_show(separator);
+  free(mii);
   return FALSE;
 }
 
@@ -209,6 +205,7 @@ gboolean do_hide_menu_item(gpointer data) {
       break;
     }
   }
+  free(mii);
   return FALSE;
 }
 
@@ -224,6 +221,7 @@ gboolean do_show_menu_item(gpointer data) {
       break;
     }
   }
+  free(mii);
   return FALSE;
 }
 
@@ -231,6 +229,8 @@ gboolean do_show_menu_item(gpointer data) {
 // again
 gboolean do_quit(gpointer data) {
   _unlink_temp_file();
+  g_list_free_full(global_menu_items, g_free);
+  global_menu_items = NULL;
   // app indicator doesn't provide a way to remove it, hide it as a workaround
   app_indicator_set_status(global_app_indicator, APP_INDICATOR_STATUS_PASSIVE);
   return FALSE;

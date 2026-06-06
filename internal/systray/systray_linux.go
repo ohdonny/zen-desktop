@@ -31,7 +31,7 @@ func quit() {
 // It can be safely invoked from different goroutines.
 // On Windows and OSX this is the same as calling AddMenuItem
 //
-// NOTE: tooltip is not set on Linux
+// NOTE: tooltip is not set on Linux.
 func AddMenuItemCheckbox(title string, checked bool) *menuItem {
 	item := newMenuItem(title, "", nil)
 	item.isCheckable = true
@@ -56,7 +56,7 @@ func (item *menuItem) SetTitle(title string) {
 // SetTooltip sets the systray tooltip to display on mouse hover of the tray icon,
 // only available on Mac and Windows.
 //
-// NOTE: tooltip is not set on Linux
+// NOTE: tooltip is not set on Linux.
 func (item *menuItem) SetTooltip(tooltip string) {
 	C.setTooltip(C.CString(tooltip))
 }
@@ -74,7 +74,7 @@ func addOrUpdateMenuItem(item *menuItem) {
 	if item.isCheckable {
 		isCheckable = 1
 	}
-	var parentID uint32 = 0
+	var parentID uint32
 	if item.parent != nil {
 		parentID = item.parent.id
 	}

@@ -1,3 +1,5 @@
+#ifndef SYSTRAY_H
+#define SYSTRAY_H
 /*
         this file contains code from the systray project
    (https://github.com/getlantern/systray), licensed under the apache license.
@@ -22,3 +24,5 @@ void add_separator(int menuId);
 void hide_menu_item(int menuId);
 void show_menu_item(int menuId);
 void quit();
+
+#endif //SYSTRAY_H

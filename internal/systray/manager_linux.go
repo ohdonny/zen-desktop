@@ -107,12 +107,13 @@ func (m *Manager) onReady(ctx context.Context) func() {
 			}
 		}()
 
-		m.startStopMenuItem = AddMenuItemCheckbox("Start", m.proxyActive)
+		m.proxyStateMu.Lock()
+		active := m.proxyActive
+		m.proxyStateMu.Unlock()
+
+		m.startStopMenuItem = AddMenuItemCheckbox("Start", active)
 		go func() {
 			for range m.startStopMenuItem.ClickedCh {
-				m.proxyStateMu.Lock()
-				active := m.proxyActive
-				m.proxyStateMu.Unlock()
 				if active {
 					m.proxyStop()
 				} else {
